@@ -94,7 +94,6 @@
 ; Delta-Reifier = Val x Val x Val x Env x Cont x MC -> Ans
 ; Gamma-Reifier = Val x Val x Val x Cont x MC -> Ans
 
-
 ; ----- the core --------------------------------------------------------------
 ; A Blond expression is either a constant (that are left as they are),
 ; an identifier (that is looked up) or a pair (that represents a redexe).
@@ -237,7 +236,7 @@
 (define _evlis
     (lambda (l r k tau)
         (if (null? l)
-            (k () tau)
+            (k '() tau)
             (_eval (car l)
                    r
                    (lambda (v tau)
@@ -832,7 +831,7 @@
                 (let ((a (_eval it r (lambda (a tau) (list 'okay a tau)) tau)))
                     (if (equal? (car a) 'okay)
                         (begin
-                            (display (cadr a)) (display " ") (flush-output)
+                            (display (cadr a)) (display " ") (flush-output-port)
                             (_load_loop file port r k tau))
                         (begin
                             (close-input-port port)
@@ -1143,7 +1142,7 @@
         load mute-load read
         open-input-file eof-object?
         close-input-port
-        flush-output
+        flush-output-port
         openloop
         extend-reified-environment
         let letrec
@@ -1166,7 +1165,7 @@
 
 
 (define table-common-values
-  (list ()
+  (list '()
         (_inSubr 1 car) (_inSubr 1 cdr)
         (_inSubr 1 caar) (_inSubr 1 cadr)
         (_inSubr 1 cdar) (_inSubr 1 cddr)
@@ -1197,7 +1196,7 @@
         (_inFsubr 1 _load) (_inFsubr 1 _mute-load) (_inFsubr 0 _read)
         (_inSubr 1 open-input-file) (_inSubr 1 eof-object?)
         (_inSubr 1 close-input-port)
-        (_inSubr 0 flush-output)
+        (_inSubr 0 flush-output-port)
         (_inFsubr 0 _openloop)
         (_inFsubr 3 _extend-reified-environment)
         (_inFsubr 2 _let) (_inFsubr 2 _letrec)
@@ -1273,7 +1272,7 @@
 ; The generation of an empty global environment:
 (define make-initial-environment
     (lambda ()
-        (_extend_env () () ())))
+        (_extend_env '() '() '())))
 
 
 ; Some fantasy:
@@ -1380,7 +1379,7 @@
             (display "-")
             (display (next-iteration i))
             (display "> ")
-            (flush-output))))
+            (flush-output-port))))
 
 ; ----- end of the file -------------------------------------------------------
 
