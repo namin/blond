@@ -174,12 +174,12 @@
         (if (not (= (length l) (_fetch-arity f)))
             (_wrong '_apply_subr "arity mismatch" l)
             (case (_fetch-arity f)
-                (0
+                ((0)
                     (k ((_fetch-value f)) tau))
-                (1
+                ((1)
                     (_eval (car l) r (lambda (a tau)
                                          (k ((_fetch-value f) a) tau)) tau))
-                (2
+                ((2)
                     (_eval (car l)
                            r
                            (lambda (a1 tau)
@@ -189,7 +189,7 @@
                                           (k ((_fetch-value f) a1 a2) tau))
                                       tau))
                            tau))
-                (3
+                ((3)
                     (_eval (car l)
                            r
                            (lambda (a1 tau)
@@ -255,9 +255,9 @@
 (define _apply_environment
     (lambda (f l r k tau)
         (case (length l)
-            (0
+            ((0)
                 (k (_env-down f) tau))
-            (1
+            ((1)
                 (_eval (car l)
                        r
                        (lambda (i tau)
@@ -267,7 +267,7 @@
                                        "not an identifier"
                                        i)))
                        tau))
-            (2
+            ((2)
                 (_eval (car l)
                        r
                        (lambda (i tau)
@@ -501,16 +501,16 @@
 (define _spawn
     (lambda (_e _r _k r k tau)
         (case (_fetch-ftype _k)
-            (subr
+            ((subr)
                 (_eval _e
                       _r
                       (lambda (a tau)
                           (_terminate-level ((_fetch-value _k) a) tau))
                       (_meta-push r k tau)))
-            (fsubr              ; adventurous
+            ((fsubr)              ; adventurous
                 ((_fetch-value _k)
                      (list _e) _r _terminate-level (_meta-push r k tau)))
-            (lambda-abstraction
+            ((lambda-abstraction)
                 (_eval _e
                        _r
                        (lambda (a tau)
@@ -518,15 +518,15 @@
                                              (_top-cont tau)
                                              (_meta-pop tau)))
                        (_meta-push r k tau)))
-            (delta-abstraction
+            ((delta-abstraction)
                 ((_untag d) (_exp-up _e) (_env-up _r)
                             (_cont-up _terminate-level)
                             r k tau))
-            (gamma-abstraction
+            ((gamma-abstraction)
                 ((_untag g) (_exp-up _e) (_env-up _r)
                             (_cont-up _terminate-level)
                             k tau))
-            (environment
+            ((environment)
                 (_eval _e
                        _r
                        (lambda (i tau)
@@ -538,7 +538,7 @@
                                        "not an identifier"
                                        i)))
                        (_meta-push r k tau)))
-            (continuation
+            ((continuation)
                 (_eval _e _r (_cont-down _k) (_meta-push r k tau))))))
 
 
@@ -867,7 +867,7 @@
 (define _openloop
     (lambda (l r k tau)
         (case (length l)
-            (1
+            ((1)
                 (_eval (car l)
                        r
                        (lambda (new-level tau)
@@ -876,7 +876,7 @@
                                 blond-banner
                                 (_meta-push r k tau)))
                        tau))
-            (2
+            ((2)
                 (_eval (car l)
                        r
                        (lambda (new-level tau)
@@ -1053,7 +1053,7 @@
 (define _reify-new-continuation
     (lambda (l r k tau)
         (case (length l)
-            (1
+            ((1)
                 (_eval (car l)
                        r
                        (lambda (level tau)
@@ -1061,7 +1061,7 @@
                                             level
                                             (make-initial-environment))) tau))
                        tau))
-            (2
+            ((2)
                 (_eval (car l)
                        r
                        (lambda (level tau)
@@ -1308,13 +1308,13 @@
         (let ((an-initial-environment (make-initial-environment)))
             (lambda (selector)
                 (case selector
-                    (env
+                    ((env)
                         an-initial-environment)
-                    (cont
+                    ((cont)
                         (_generate_toplevel-continuation
                             (level-above level)
                             an-initial-environment))
-                    (meta-continuation
+                    ((meta-continuation)
                         (initial-meta-continuation (level-above level)))
                     (else
                         (_error foobarbaz)))))))
@@ -1340,9 +1340,9 @@
     (lambda (r k tau)
         (lambda (selector)
             (case selector
-                (env r)
-                (cont k)
-                (meta-continuation tau)
+                ((env) r)
+                ((cont) k)
+                ((meta-continuation) tau)
                 (else (_error foobarbaz))))))
 
 
