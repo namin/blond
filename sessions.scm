@@ -1,3 +1,5 @@
+(load "blond.scm")
+
 (blond)
 (load "exit.bl")
 (exit "good bye")
