@@ -129,6 +129,16 @@ foo
 (blond-exit)
 
 (blond)
+(load "permute.bl")
+(load "exit.bl")
+(permute!)
+(exit "bye")
+(exit "ibid.")
+(exit "again")
+(exit "more")
+(blond-exit)
+
+(blond)
 (load "swap.bl")
 (load "nexit.bl")
 (swap! 85 133)

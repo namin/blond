@@ -1,0 +1,18 @@
+(define permute!
+  (delta (e0 r0 k0)
+    ((delta (e1 r1 k1)
+       ((delta (e2 r2 k2)
+          (let ((R2 (extend-reified-environment'
+                     (R0 K0)
+                     (list ((r2 'r1) 'r0)
+                           ((r2 'r1) 'k0))
+                     r2))
+                (K2 k2))
+            (let ((R1 (extend-reified-environment'
+                       (R2 K2)
+                       (list R2 K2)
+                       (r2 'r1)))
+                  (K1 (r2 'k1)))
+              (meaning' (meaning' (meaning' "done" R0 K0)
+                                  R2 K2)
+                        R1 K1)))))))))
