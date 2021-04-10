@@ -115,6 +115,7 @@ foo
 (nexit 64)
 (nexit 8)
 (nexit 0)
+(blond-exit)
 
 (blond)
 (mute-load "scheme.bl")
