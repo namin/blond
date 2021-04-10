@@ -116,4 +116,16 @@ foo
 (nexit 8)
 (nexit 0)
 
-
+(blond)
+(mute-load "scheme.bl")
+(mute-load "blond.scm")
+(call/ce
+ (lambda (r)
+   (openloop "blond" r)))
+(blond)
+car
+'(1 2 3)
+(car '(1 2 3))
+(blond-exit)
+car
+(blond-exit)

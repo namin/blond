@@ -1244,8 +1244,10 @@
 	(>= n 0)))
 
 (define _nth
-    (lambda (n l)
-        (list-tail l n)))
+     (lambda (n l)
+       (if (= n 0)
+           l
+           (_nth (sub1 n) (cdr l)))))
 
 (define _fetch-ftype car)
 (define _fetch-arity cadr)
