@@ -1,0 +1,24 @@
+(define openloop
+  (delta (e r k)      ; List(RExp) * REnv * RCont -> Val
+    (case (length e)
+      (1
+       (meaning (car e)
+                r
+                (lambda (level)
+                  (meaning '(meaning "bottom-level"
+                                     (reify-new-environment)
+                                     (reify-new-continuation level))
+                           (extend-reified-environment '(level) (list level) r)
+                           k))))
+      (2 (meaning (car e)
+                  r
+                  (lambda (level)
+                    (meaning (cadr e)
+                             r
+                             (lambda (env)
+                               (meaning '(meaning "bottom-level"
+                                                  (reify-new-environment)
+                                                  (reify-new-continuation level env))
+                                        (extend-reified-environment '(level env) (list level env) r)
+                                        k))))))
+      (else (meaning "openloop: arity mismatch" r k)))))

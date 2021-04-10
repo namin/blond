@@ -1,0 +1,3 @@
+(common-define bye
+  (delta (e r k)   ; List(RExp) * REnv * RCont -> Str
+    "bye"))

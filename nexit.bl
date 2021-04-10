@@ -1,0 +1,6 @@
+(common-define nexit
+  (lambda (n)         ; Num_m -> Str_m'
+    (if (<= n 0)
+        "home"
+        ((delta (e r k)
+           (nexit (sub1 (r 'n))))))))

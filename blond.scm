@@ -1121,6 +1121,7 @@
         number? string? symbol?
         zero? add1 sub1
         + - *
+        < <= > >=
         cons equal?
         = boolean?
         negative? positive?
@@ -1175,6 +1176,7 @@
         (_inSubr 1 number?) (_inSubr 1 string?) (_inSubr 1 symbol?)
         (_inSubr 1 zero?) (_inSubr 1 add1) (_inSubr 1 sub1)
         (_inSubr 2 +) (_inSubr 2 -) (_inSubr 2 *)
+        (_inSubr 2 <) (_inSubr 2 <=) (_inSubr 2 >) (_inSubr 2 >=)
         (_inSubr 2 cons) (_inSubr 2 equal?)
         (_inSubr 2 =) (_inSubr 1 boolean?)
         (_inSubr 1 negative?) (_inSubr 1 positive?)

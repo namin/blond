@@ -1,0 +1,13 @@
+(common-define the-environment
+  (delta (e r k)      ; List(RExp) * REnv * RCont -> Val
+    (meaning 'dummy
+             (extend-reified-environment '(dummy) (list r) r)
+             k)))
+                                 
+(common-define call/ce
+  (delta (e r k)      ; List(RExp) * REnv * RCont -> Val
+    (meaning (car e)
+             r
+             (lambda (f) (meaning '(f r)
+                             (extend-reified-environment '(f r) (list f r) r)
+                             k))))) 

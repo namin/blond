@@ -1,0 +1,4 @@
+(common-define exit ; transmits a value from level n to level n+1
+  (lambda (x)            ; Val_n -> Val_n+1
+    ((delta (e r k)
+       (r 'x)))))

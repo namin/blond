@@ -1,0 +1,60 @@
+(common-define swap!
+  (lambda (n o)       ; Num * Num -> Str
+    (cond ((or (< n 0) (< o 0))
+           "foobar")
+          ((< n o)
+           (get-up! n (- o n) '()))
+          ((> n o)
+           (get-up! o (- n o) '()))
+          (else "already done"))))
+
+(common-define get-up!
+  (lambda (n o l)     ; Num * Num * List(Pair(REnv, RCont)) -> Str
+    (if (zero? n)
+        ((delta (e r k)
+           (got-up! (r 'o) (cons (cons r k) (r 'l)) '())))
+        ((delta (e r k)
+           (get-up! (sub1 (r 'n)) (r 'o) (cons (cons r k) (r 'l))))))))
+
+(common-define got-up!
+  (lambda (o l ll)    ; Num * List(Pair(REnv, RCont)) * List(Pair(REnv, RCont)) -> Str
+    (if (zero? o)
+        (meaning (list 'got-down! (kwote (cons (car ll) (cdr l))) (kwote (cdr ll)))
+                 (caar l)
+                 (cdar l))
+        ((delta (e r k)
+           (got-up! (sub1 (r 'o)) (r 'l) (cons (cons r k) (r 'll))))))))
+
+(common-define kwote
+  (lambda (x)         ; Val -> RExp
+    (list 'quote x)))
+
+(common-define got-down!
+  (lambda (l ll)      ; List(Pair(REnv, RCont)) * List(Pair(REnv, RCont)) -> Str
+    (if (null? ll)
+        (get-down! l)
+        (meaning (list 'got-down! (kwote l) (kwote (cdr ll))) (caar ll) (cdar ll)))))
+
+(common-define get-down!
+  (lambda (l)         ; List(Pair(REnv, RCont)) -> Str
+    (if (null? l)
+        "done!"
+        (meaning (list 'get-down! (kwote (cdr l))) (caar l) (cdar l))))) 
+
+(load "bye.bl")
+(blond-exit)
+
+(blond)
+(load "swap.bl")
+(load "nexit.bl")
+(swap! 85 133)
+(bye)
+(nexit 83)
+(bye)
+(bye)
+(bye)
+(nexit 45)
+(bye)
+(bye)
+(nexit 166)
+(blond-exit)

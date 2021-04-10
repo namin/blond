@@ -1,0 +1,6 @@
+(common-define call/cc
+  (lambda (f)         ; (Val -> Val) -> Val
+    ((delta (e r k)
+       (meaning '(f dummy)
+                (extend-reified-environment '(dummy) (list k) r)
+                k)))))
