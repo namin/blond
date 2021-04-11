@@ -1,4 +1,4 @@
 #!/bin/bash
 
-mit-scheme --load format.scm --load mit.scm --load blond.scm <sessions.scm
+mit-scheme --load format.scm --load mit.scm <sessions.scm
 chez <sessions.scm
