@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
 
-echo "(load-option 'format)" >format.scm
 cat $2 $1 >out.scm
-mechanics-shell --load format.scm --load blond.scm <out.scm | tail -n +15
+mechanics-shell --load format.scm --load mit.scm --load blond.scm <out.scm | tail -n +15
