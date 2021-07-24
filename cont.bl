@@ -1,0 +1,13 @@
+(common-define jumpify
+  (lambda (pc)
+    (lambda (a)
+      ((delta (e r k)
+         (meaning a r (r 'pc)))))))
+
+(common-define pushify
+  (lambda (jc)
+    (lambda (a)
+      (let ((env (extend-reified-environment'
+                  (dummy) (list a)
+                  (reify-new-environment))))
+        (meaning' dummy env jc)))))
