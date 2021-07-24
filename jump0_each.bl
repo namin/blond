@@ -1,0 +1,4 @@
+((delta (e r k)
+   (define re-enter
+     (lambda ()
+       (meaning' 'ok r k)))))

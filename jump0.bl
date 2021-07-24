@@ -1,1 +1,4 @@
-((delta (e r k) (common-define re-enter k)))
+((delta (e r k)
+   (common-define re-enter
+     (lambda ()
+       (k 'ok)))))
