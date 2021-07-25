@@ -2,7 +2,7 @@
   (lambda (pc)
     (lambda (a)
       ((delta (e r k)
-         (meaning a r (r 'pc)))))))
+         (meaning' a r (r 'pc)))))))
 
 (common-define pushify
   (lambda (jc)
