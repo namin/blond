@@ -1,9 +1,4 @@
 ((delta (e r k)
    (define re-enter
-     (lambda ()
-       (meaning'
-        'ok r
-        (lambda (v)
-          (begin
-            ((r 're-enter))
-            ((pushify k) v))))))))
+     (lambda (v)
+       ((pushify k) ((r 're-enter) v))))))
