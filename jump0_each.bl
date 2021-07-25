@@ -1,2 +1,6 @@
 ((delta (e r k)
-   (define re-enter (pushify k))))
+   (begin
+     (define re-enter (pushify k))
+     (meaning' (define jump k)
+               (extend-reified-environment' (k) (list k) r)
+               k))))
