@@ -1,0 +1,65 @@
+(blond)
+
+((delta (e r k) (meaning e r k)) + 1 6)
+;; returns 7
+
+((delta
+  (e r k)
+  (let ((old-meaning (r 'meaning)))
+    (old-meaning e r k))
+  )
+ + 1 6
+)
+;; returns 7
+
+((delta
+  (e r k)
+  (let ((old-meaning (r 'meaning)))
+    (begin
+      (r 'meaning (lambda (e r k) (old-meaning e r k)))
+      (meaning e r k)))
+  )
+ + 1 6
+)
+;; returns 7
+
+((delta
+  (e r k)
+  (let ((old-meaning (r 'meaning)))
+    (let ((count 0))
+      (begin
+        (r 'meaning (lambda (e r k)
+                      (begin
+                        (set! count (+ count 1))
+                        (old-meaning e r k))))
+         (meaning e r (lambda (v) (k count)))))))
+ + 1 6
+)
+;; returns 0
+
+((delta
+  (e r k)
+  (let ((old-meaning (r 'meaning)))
+    (let ((count 0))
+      (let ((my-meaning
+             (lambda (e r k)
+               (begin
+                 (set! count (+ count 1))
+                 (old-meaning e r k)))))
+         (my-meaning e r (lambda (v) (k count)))))))
+ + 1 6
+)
+;; returns 1
+
+(common-define old-meaning meaning)
+(common-define count 0)
+(common-define meaning
+               (lambda (e r k)
+                 (begin
+                   (set! count (+ count 1))
+                   (old-meaning e r k))))
+
+((delta (e r k) (meaning e r k)) + 1 6)
+;; returns 7
+count
+;; returns 1
