@@ -41,6 +41,23 @@
   (e r k)
   (let ((old-meaning (r 'meaning)))
     (let ((count 0))
+      (begin
+        ((delta (e1 r1 k1)
+                (begin
+                  (r1 'meaning (lambda (e r k)
+                                (begin
+                                  (r1 'count (+ (r1 'count) 1))
+                                  ((r1 'old-meaning) e r k))))
+                  (k1 'done))))
+         (meaning e r (lambda (v) (k count)))))))
+ + 1 6
+)
+;; returns 1
+
+((delta
+  (e r k)
+  (let ((old-meaning (r 'meaning)))
+    (let ((count 0))
       (let ((my-meaning
              (lambda (e r k)
                (begin
